@@ -127,3 +127,15 @@ def get_current_admin_user(current_user = Depends(get_current_user)):
             detail="Not enough permissions. Admin access required."
         )
     return current_user
+
+
+def get_current_council_user(current_user = Depends(get_current_user)):
+    """
+    Dependency to verify that the current user is a council account.
+    """
+    if not getattr(current_user, "is_council", False) or not getattr(current_user, "council_id", None):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not enough permissions. Council access required."
+        )
+    return current_user

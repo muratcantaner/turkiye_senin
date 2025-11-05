@@ -90,6 +90,7 @@ def create_event(
         event_date=event_data.event_date,
         event_location=event_data.event_location,
         event_category=event_data.event_category,
+        event_description=event_data.event_description,
         event_limit=event_data.event_limit,
         event_price=event_data.event_price,
         organizator_id=event_data.organizator_id

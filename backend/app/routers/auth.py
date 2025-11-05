@@ -9,7 +9,8 @@ from app.core.security import (
     create_access_token
 )
 from app.models.user import User
-from app.schemas.user import UserCreate, UserRead
+from app.models.council import Council
+from app.schemas.user import UserCreate, UserRead, CouncilUserCreate
 from app.schemas.token import Token
 
 
@@ -81,3 +82,44 @@ def login(
     access_token = create_access_token(data={"sub": user.email})
     
     return {"access_token": access_token, "token_type": "bearer"}
+
+
+@router.post("/register-council", response_model=UserRead, status_code=status.HTTP_201_CREATED)
+def register_council(user_data: CouncilUserCreate, db: Session = Depends(get_db)):
+    """
+    Register a council-linked user account.
+    The created user will have is_council=True and be linked to the given council_id.
+    """
+    # Check unique email
+    existing_user = db.query(User).filter(User.email == user_data.email).first()
+    if existing_user:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Email already registered"
+        )
+
+    # Validate council exists
+    council = db.query(Council).filter(Council.id == user_data.council_id).first()
+    if not council:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Council with ID {user_data.council_id} not found"
+        )
+
+    hashed_password = get_password_hash(user_data.password)
+    new_user = User(
+        email=user_data.email,
+        hashed_password=hashed_password,
+        user_name=user_data.user_name,
+        user_surname=user_data.user_surname,
+        user_city=user_data.user_city,
+        is_admin=False,
+        is_council=True,
+        council_id=user_data.council_id,
+    )
+
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+
+    return new_user

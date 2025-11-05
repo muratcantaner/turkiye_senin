@@ -1,3 +1,3 @@
-from app.routers import auth, users, events, councils, scholarships, admin
+from app.routers import auth, users, events, councils, scholarships, admin, chatbot
 
-__all__ = ["auth", "users", "events", "councils", "scholarships", "admin"]
+__all__ = ["auth", "users", "events", "councils", "scholarships", "admin", "chatbot"]

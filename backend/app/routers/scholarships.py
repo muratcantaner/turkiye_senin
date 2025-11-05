@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 from typing import List
 
 from app.core.db import get_db
@@ -21,5 +21,5 @@ def get_all_scholarships(db: Session = Depends(get_db)):
     - Application URL
     - Organizing council information
     """
-    scholarships = db.query(Scholarship).all()
+    scholarships = db.query(Scholarship).options(selectinload(Scholarship.council)).all()
     return scholarships

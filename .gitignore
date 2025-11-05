@@ -1,0 +1,84 @@
+# =============================
+# Global ignores for this repo
+# Backend: Python/FastAPI
+# Frontend: Node (safe defaults)
+# IDE/OS logs and caches
+# =============================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Virtual environments
+env_undp/
+.venv/
+venv/
+env/
+ENV/
+fundamental/
+
+# Build & packaging
+build/
+dist/
+.eggs/
+*.egg-info/
+wheels/
+
+# Test & tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pytype/
+.pyre/
+.cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+pytestdebug.log
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Jupyter
+.ipynb_checkpoints/
+
+# --- Node/Frontend (safe to ignore) ---
+node_modules/
+.next/
+.nuxt/
+out/
+dist/
+build/
+.svelte-kit/
+.storybook/
+.vite/
+.pnpm-store/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- IDE ---
+.vscode/
+.idea/
+*.code-workspace
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Misc ---
+*.swp
+*.swo

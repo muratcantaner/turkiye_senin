@@ -1,5 +1,6 @@
 from pydantic import BaseModel, ConfigDict
 from datetime import date
+from app.schemas.council import CouncilRead
 
 
 class ScholarshipBase(BaseModel):
@@ -18,6 +19,6 @@ class ScholarshipCreate(ScholarshipBase):
 class ScholarshipRead(ScholarshipBase):
     """Schema for reading scholarship data"""
     id: int
-    council_id: int
+    council: CouncilRead
     
     model_config = ConfigDict(from_attributes=True)

@@ -14,6 +14,7 @@ class Event(Base):
     event_date = Column(DateTime, nullable=False)
     event_location = Column(String, nullable=False)
     event_category = Column(String, nullable=False)
+    event_description = Column(String, nullable=True)
     event_limit = Column(Integer, nullable=True)  # Max participants (None = unlimited)
     event_price = Column(Float, default=0.0, nullable=False)
     

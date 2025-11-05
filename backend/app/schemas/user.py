@@ -15,6 +15,11 @@ class UserCreate(UserBase):
     password: str
 
 
+class CouncilUserCreate(UserBase):
+    password: str
+    council_id: int
+
+
 class UserUpdate(BaseModel):
     """Schema for updating user information"""
     user_name: Optional[str] = None
@@ -26,5 +31,7 @@ class UserRead(UserBase):
     """Schema for reading user data (excludes password)"""
     id: int
     is_admin: bool
+    is_council: bool
+    council_id: Optional[int] = None
     
     model_config = ConfigDict(from_attributes=True)

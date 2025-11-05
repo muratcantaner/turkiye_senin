@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 from typing import List
 
 from app.core.db import get_db
@@ -21,7 +21,7 @@ def get_all_events(db: Session = Depends(get_db)):
     
     Returns a list of all events with their details including organizer information.
     """
-    events = db.query(Event).all()
+    events = db.query(Event).options(selectinload(Event.organizator)).all()
     return events
 
 
@@ -34,7 +34,7 @@ def get_event_by_id(event_id: int, db: Session = Depends(get_db)):
     
     Returns event details including organizer information.
     """
-    event = db.query(Event).filter(Event.id == event_id).first()
+    event = db.query(Event).options(selectinload(Event.organizator)).filter(Event.id == event_id).first()
     
     if not event:
         raise HTTPException(
